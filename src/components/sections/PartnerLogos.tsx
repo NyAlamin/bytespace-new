@@ -21,13 +21,15 @@ export function PartnerLogos() {
               key={partner.name}
               className="flex h-[42px] items-center gap-2 text-shuttle-gray-400"
             >
-              <Image
-                src={partner.src}
-                alt=""
-                width={41}
-                height={41}
-                className="h-[41px] w-auto"
-              />
+              <span className="relative block size-[41px] shrink-0">
+                <Image
+                  src={partner.src}
+                  alt=""
+                  fill
+                  sizes="41px"
+                  className="object-contain"
+                />
+              </span>
               <span className="text-[24px] font-bold leading-none tracking-[-0.03em]">
                 Logoipsum
               </span>

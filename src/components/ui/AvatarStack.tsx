@@ -6,6 +6,7 @@ type AvatarStackProps = {
   size?: number;
   step?: number;
   badgeClassName?: string;
+  badgeTextClassName?: string;
   className?: string;
 };
 
@@ -15,6 +16,7 @@ export function AvatarStack({
   size = 43,
   step = 27,
   badgeClassName = "bg-electric-lime-400 text-shuttle-gray-950",
+  badgeTextClassName = "text-[12px] font-bold leading-[1.5]",
   className = "",
 }: AvatarStackProps) {
   const width = sources.length * step + size;
@@ -45,7 +47,7 @@ export function AvatarStack({
         </span>
       ))}
       <span
-        className={`absolute top-0 flex items-center justify-center rounded-full text-[12px] font-bold leading-[1.5] ${badgeClassName}`}
+        className={`absolute top-0 flex items-center justify-center rounded-full ${badgeTextClassName} ${badgeClassName}`}
         style={{
           left: sources.length * step,
           width: size,
