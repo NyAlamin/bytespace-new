@@ -4,9 +4,37 @@ import { AvatarStack } from "@/components/ui/AvatarStack";
 import { COURSE_CARD_AVATARS } from "@/data/students";
 import type { Course } from "@/data/courses";
 
+type CourseCardVariant = "grid" | "featured";
+
 type CourseCardProps = {
   course: Course;
+  variant?: CourseCardVariant;
 };
+
+const VARIANT_STYLES = {
+  grid: {
+    pill: "h-[26px] leading-[1.2]",
+    title: "leading-[1.2]",
+    byline: "leading-[1.6]",
+    priceAmount: "font-semibold leading-[1.2]",
+    priceUnit: "leading-[1.6]",
+    rating: "font-normal leading-[1.6]",
+    star: "fill-shuttle-gray-200",
+    starSize: 19,
+    badge: "bg-electric-lime-400 text-shuttle-gray-950",
+  },
+  featured: {
+    pill: "h-8 leading-5",
+    title: "leading-7",
+    byline: "leading-5",
+    priceAmount: "font-medium leading-7",
+    priceUnit: "leading-5",
+    rating: "font-medium leading-7",
+    star: "fill-electric-lime-400",
+    starSize: 20,
+    badge: "bg-black text-white",
+  },
+} as const;
 
 function LevelIcon() {
   return (
@@ -24,7 +52,8 @@ function LevelIcon() {
   );
 }
 
-export function CourseCard({ course }: CourseCardProps) {
+export function CourseCard({ course, variant = "grid" }: CourseCardProps) {
+  const styles = VARIANT_STYLES[variant];
   const stats = [
     `${course.lessons} Lessons`,
     course.duration,
@@ -45,7 +74,7 @@ export function CourseCard({ course }: CourseCardProps) {
           {stats.map((stat) => (
             <li
               key={stat}
-              className="flex h-[26px] items-center justify-center rounded-3xl bg-[rgba(246,246,246,0.6)] px-3 text-[12px] font-medium leading-[1.2] text-black-700 backdrop-blur-[4px]"
+              className={`flex items-center justify-center rounded-3xl bg-[rgba(246,246,246,0.6)] px-3 text-[12px] font-medium text-black-700 backdrop-blur-[4px] ${styles.pill}`}
             >
               {stat}
             </li>
@@ -55,12 +84,13 @@ export function CourseCard({ course }: CourseCardProps) {
 
       <div className="absolute left-4 top-[232px] flex w-[237px] flex-col gap-4">
         <div>
-          <h3 className="w-[280px] truncate font-heading text-[20px] font-semibold leading-[1.2] text-black-950">
+          <h3
+            className={`w-[280px] truncate font-heading text-[20px] font-semibold text-black-950 ${styles.title}`}
+          >
             {course.title}
           </h3>
-          <p className="text-[12px] leading-[1.6] text-black-700">
-            by{" "}
-            <span className="text-persian-blue-800">{course.author}</span>
+          <p className={`text-[12px] text-black-700 ${styles.byline}`}>
+            by <span className="text-persian-blue-800">{course.author}</span>
           </p>
         </div>
 
@@ -74,30 +104,33 @@ export function CourseCard({ course }: CourseCardProps) {
             badgeLabel="26+"
             size={32}
             step={24}
+            badgeClassName={styles.badge}
             badgeTextClassName="text-[12px] font-medium leading-5"
           />
         </div>
 
-        <p className="flex items-end">
-          <span className="font-heading text-[20px] font-semibold leading-[1.2] text-persian-blue-800">
+        <p className="flex h-6 items-end">
+          <span
+            className={`font-heading text-[20px] text-persian-blue-800 ${styles.priceAmount}`}
+          >
             ${course.price}
           </span>
-          <span className="text-[12px] leading-[1.6] text-black-700">
+          <span className={`text-[12px] text-black-700 ${styles.priceUnit}`}>
             /lifetime
           </span>
         </p>
       </div>
 
       <div className="absolute left-[306px] top-[232px] flex items-center">
-        <span className="text-[18px] leading-[1.6] text-black-700">
+        <span className={`text-[18px] text-black-700 ${styles.rating}`}>
           {course.rating}
         </span>
         <span className="flex size-6 items-center justify-center">
           <Star
-            size={19}
+            size={styles.starSize}
             strokeWidth={0}
             aria-hidden="true"
-            className="fill-shuttle-gray-200"
+            className={styles.star}
           />
         </span>
       </div>

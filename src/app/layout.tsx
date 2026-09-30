@@ -42,7 +42,7 @@ export default function RootLayout({
       lang="en"
       className={`${poppins.variable} ${satoshi.variable} ${clashDisplay.variable}`}
     >
-      <body>{children}</body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
