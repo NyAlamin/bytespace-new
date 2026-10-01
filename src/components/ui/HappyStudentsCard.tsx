@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 import { AvatarStack } from "@/components/ui/AvatarStack";
 
 type HappyStudentsVariant = "compact" | "featured";
+type HappyStudentsTone = "light" | "lime";
 
 type HappyStudentsCardProps = {
   rating: string;
@@ -9,6 +10,7 @@ type HappyStudentsCardProps = {
   avatars: readonly string[];
   badgeLabel: string;
   variant?: HappyStudentsVariant;
+  tone?: HappyStudentsTone;
   className?: string;
 };
 
@@ -25,19 +27,34 @@ const VARIANT_STYLES = {
   },
 } as const;
 
+const TONE_STYLES = {
+  light: {
+    card: "bg-white",
+    star: "fill-electric-lime-400 stroke-electric-lime-400",
+    badge: "bg-electric-lime-400 text-shuttle-gray-950",
+  },
+  lime: {
+    card: "bg-electric-lime-400",
+    star: "fill-persian-blue-800 stroke-persian-blue-800",
+    badge: "bg-shuttle-gray-950 text-shuttle-gray-50",
+  },
+} as const;
+
 export function HappyStudentsCard({
   rating,
   reviewCount,
   avatars,
   badgeLabel,
   variant = "compact",
+  tone = "light",
   className = "",
 }: HappyStudentsCardProps) {
   const styles = VARIANT_STYLES[variant];
+  const toneStyles = TONE_STYLES[tone];
 
   return (
     <div
-      className={`flex w-[258px] flex-col justify-center gap-2 rounded-2xl bg-white p-4 ${styles.card} ${className}`}
+      className={`flex w-[258px] flex-col justify-center gap-2 rounded-2xl p-4 ${styles.card} ${toneStyles.card} ${className}`}
     >
       <div>
         <p
@@ -51,14 +68,14 @@ export function HappyStudentsCard({
           <span>
             {rating} ({reviewCount})
           </span>
-          <Star
-            size={16}
-            strokeWidth={1}
-            className="fill-electric-lime-400 stroke-electric-lime-400"
-          />
+          <Star size={16} strokeWidth={1} className={toneStyles.star} />
         </div>
       </div>
-      <AvatarStack sources={avatars} badgeLabel={badgeLabel} />
+      <AvatarStack
+        sources={avatars}
+        badgeLabel={badgeLabel}
+        badgeClassName={toneStyles.badge}
+      />
     </div>
   );
 }
