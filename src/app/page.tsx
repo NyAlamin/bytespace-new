@@ -1,3 +1,4 @@
+import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { CourseCatalog } from "@/components/sections/CourseCatalog";
 import { CtaBanner } from "@/components/sections/CtaBanner";
@@ -20,6 +21,7 @@ export default function HomePage() {
         <CtaBanner />
         <Testimonials />
       </main>
+      <Footer />
     </div>
   );
 }
